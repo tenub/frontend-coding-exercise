@@ -1,9 +1,3 @@
-import React from 'react';
-
-const Tray = ({ children }) => (
-  <div className='element-tray'>
-    {children}
-  </div>
-);
+import Tray from './Tray';
 
 export default Tray;
