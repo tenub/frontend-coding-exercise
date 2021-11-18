@@ -4,6 +4,10 @@ import { DropTarget } from 'react-dnd';
 import { ItemTypes } from '../../ItemTypes';
 
 class Placeholder extends React.PureComponent {
+  /**
+   * Only process item types defined here whenever an item is dropped
+   * onto the Placeholder.
+   */
   static types = [
     ItemTypes.BUTTON,
     ItemTypes.INPUT,
@@ -24,13 +28,12 @@ class Placeholder extends React.PureComponent {
     canDrop: monitor.canDrop(),
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
-    isOverCurrent: monitor.isOver({ shallow: true }),
-    itemType: monitor.getItemType(),
   })
 
   render() {
     const { children, isOver, canDrop, connectDropTarget } = this.props;
     const isActive = canDrop && isOver;
+
     let backgroundColor;
     if (isActive) {
       backgroundColor = 'grey';

@@ -6,30 +6,69 @@ import { DndProvider } from 'react-dnd';
 
 import { Canvas, Draggable, Tray } from './components';
 
+/**
+ * Create a Tray with Draggable components.
+ * Canvas will receive and process any dragged components
+ * using the react-dnd library.
+ */
 const App = () => (
   <DndProvider backend={HTML5Backend}>
     <Tray>
-      <Draggable name='signup' type='text'>
+      <Draggable
+        name='signup'
+        type='text'
+      >
         <strong>Sign Up</strong>
       </Draggable>
 
-      <Draggable name='firstname' type='input'>
-        <input type='text' name='firstname' placeholder='First Name' />
+      <Draggable
+        name='firstname'
+        type='input'
+      >
+        <input
+          name='firstname'
+          placeholder='First Name'
+          type='text'
+        />
       </Draggable>
 
-      <Draggable name='lastname' type='input'>
-        <input type='text' name='lastname' placeholder='Last Name' />
+      <Draggable
+        name='lastname'
+        type='input'
+      >
+        <input
+          name='lastname'
+          placeholder='Last Name'
+          type='text'
+        />
       </Draggable>
 
-      <Draggable name='email' type='input'>
-        <input type='email' name='lastname' placeholder='Email Address' />
+      <Draggable
+        name='email'
+        type='input'
+      >
+        <input
+          name='lastname'
+          placeholder='Email Address'
+          type='email'
+        />
       </Draggable>
 
-      <Draggable name='phone' type='input'>
-        <input type='tel' name='lastname' placeholder='Phone Number' />
+      <Draggable
+        name='phone'
+        type='input'
+      >
+        <input
+          name='lastname'
+          placeholder='Phone Number'
+          type='tel'
+        />
       </Draggable>
 
-      <Draggable name='submit' type='button'>
+      <Draggable
+        name='submit'
+        type='button'
+      >
         <button type='submit'>
           Submit
         </button>

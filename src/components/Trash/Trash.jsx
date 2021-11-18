@@ -5,6 +5,10 @@ import { TrashAlt } from '@styled-icons/boxicons-solid';
 import { ItemTypes } from '../../ItemTypes';
 
 class Trash extends React.PureComponent {
+  /**
+   * Only allow item types defined here to be deleted when dropped onto this
+   * component.
+   */
   static types = [
     ItemTypes.BUTTON,
     ItemTypes.INPUT,
@@ -18,6 +22,10 @@ class Trash extends React.PureComponent {
         return;
       }
 
+      /**
+       * If an item is not dragged from the Canvas, i.e. it doesn't have an
+       * index property, do not process or delete it.
+       */
       const item = monitor.getItem();
       if (typeof item.index === 'undefined') {
         return;
@@ -30,11 +38,8 @@ class Trash extends React.PureComponent {
   }
 
   static collect = (connect, monitor) => ({
-    canDrop: monitor.canDrop(),
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
-    isOverCurrent: monitor.isOver({ shallow: true }),
-    itemType: monitor.getItemType(),
   })
 
   render() {
