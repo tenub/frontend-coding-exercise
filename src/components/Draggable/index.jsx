@@ -1,43 +1,44 @@
-import { useDrag } from 'react-dnd';
+import React from 'react';
+import { DragSource } from 'react-dnd';
+
 import { ItemTypes } from '../../ItemTypes';
 
-const Draggable = ({
-  children,
-  deleteItem,
-  position,
-  name,
-  type,
-}) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes[type.toUpperCase()],
-    item: { children, position, name, type },
-    end: (item, monitor) => {
-      if (!deleteItem) {
-        return;
-      }
+class Draggable extends React.PureComponent {
+  static type = ({ type }) => {
+    const itemTypeKey = type.toUpperCase()
+    return ItemTypes[itemTypeKey];
+  }
 
-      const dropResult = monitor.getDropResult();
-      if (item && !dropResult) {
-        deleteItem(item.position);
-      }
+  static spec = {
+    beginDrag: (props, monitor, component) => {
+      const { children, index, name, type } = props;
+      return { children, index, name, type };
     },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
-    }),
-  }))
+  }
 
-  const opacity = isDragging ? 0.4 : 1;
+  static collect = (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+    handlerId: monitor.getHandlerId(),
+  })
 
-  return (
-    <div
-      ref={drag}
-      className='element-draggable'
-      style={{ opacity }}
-    >
-      {children}
-    </div>
-  );
-};
+  render() {
+    const { connectDragSource, isDragging, children } = this.props;
+    const opacity = isDragging ? 0.4 : 1.0;
 
-export default Draggable;
+    return connectDragSource(
+      <div
+        className='element-draggable'
+        style={{ opacity }}
+      >
+        {children}
+      </div>
+    );
+  }
+}
+
+export default DragSource(
+  Draggable.type,
+  Draggable.spec,
+  Draggable.collect,
+)(Draggable);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { DropTarget } from 'react-dnd';
+
 import { ItemTypes } from '../../ItemTypes';
 
 class Placeholder extends React.PureComponent {
@@ -11,10 +12,10 @@ class Placeholder extends React.PureComponent {
 
   static spec = {
     drop: (props, monitor) => {
-      const { position } = props;
+      const { index } = props;
       return {
         name: 'Placeholder',
-        position,
+        index,
       };
     },
   }
@@ -28,13 +29,13 @@ class Placeholder extends React.PureComponent {
   })
 
   render() {
-    const { isOver, canDrop, connectDropTarget } = this.props;
+    const { children, isOver, canDrop, connectDropTarget } = this.props;
     const isActive = canDrop && isOver;
     let backgroundColor;
     if (isActive) {
-      backgroundColor = 'darkgreen';
+      backgroundColor = 'grey';
     } else if (canDrop) {
-      backgroundColor = 'darkkhaki';
+      backgroundColor = 'lightgrey';
     } else {
       backgroundColor = 'white'
     }
@@ -43,7 +44,9 @@ class Placeholder extends React.PureComponent {
       <div
         className='element-placeholder'
         style={{ backgroundColor }}
-      />
+      >
+        {children}
+      </div>
     );
   }
 }
